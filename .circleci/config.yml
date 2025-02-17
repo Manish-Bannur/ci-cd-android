@@ -1,7 +1,7 @@
 version: 2.1
 
-orbs:
-  android: circleci/android@0.2.0
+docker:
+  - image: cimg/android:2024.01-node
 
 jobs:
   build:
