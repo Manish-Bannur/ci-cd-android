@@ -1,5 +1,10 @@
 version: 2.1
 
+workflows:
+  build:
+    jobs:
+      - build
+
 jobs:
   build:
     executor:
@@ -16,9 +21,3 @@ jobs:
             echo "JAVA_HOME is set to: $JAVA_HOME"
       - run:
           command: ./gradlew build
-
-workflows:
-  version: 2
-  build-deploy:
-    jobs:
-      - build
