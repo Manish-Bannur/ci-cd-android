@@ -1,13 +1,24 @@
 version: 2.1
 
-docker:
-  - image: cimg/android:2024.01-node
+orbs:
+  android: circleci/android@2.3.0
 
 jobs:
   build:
-    executor: android/android
-
+    executor:
+      name: android/android
     steps:
       - checkout
       - run:
+          name: Set Java 17
+          command: |
+            echo 'export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64' >> $BASH_ENV
+            source $BASH_ENV
+      - run:
           command: ./gradlew build
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
