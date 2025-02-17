@@ -1,23 +1,24 @@
 version: 2.1
 
-workflows:
-  build:
-    jobs:
-      - build
+orbs:
+  android: circleci/android@0.2.0
 
 jobs:
   build:
     executor:
       name: android/android
-    docker:
-      - image: cimg/android:2024.01-node
+
     steps:
       - checkout
       - run:
-          name: Set Java 17 and Check Version
+          name: Set Java 17
           command: |
             java -version
-            export JAVA_HOME=/opt/java/openjdk
-            echo "JAVA_HOME is set to: $JAVA_HOME"
+            echo 'export JAVA_HOME=$(/usr/libexec/java_home)' >> $BASH_ENV
+            #Alternative if above doesn't work:
+            #echo 'export JAVA_HOME=/opt/android/sdk/jdk/17' >> $BASH_ENV
+            source $BASH_ENV
+            echo $JAVA_HOME
       - run:
           command: ./gradlew build
+
