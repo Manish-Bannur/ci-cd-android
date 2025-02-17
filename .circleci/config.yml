@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  android: circleci/android@0.2.0
+  android: circleci/android@2.3.0
 
 jobs:
   build:
@@ -12,7 +12,11 @@ jobs:
       - run:
           name: Set Java 17
           command: |
-            echo 'export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64' >> $BASH_ENV
+            java -version
+            echo 'export JAVA_HOME=$(/usr/libexec/java_home)' >> $BASH_ENV
+            # Alternative if above doesn't work:
+            # echo 'export JAVA_HOME=/opt/android/sdk/jdk/17' >> $BASH_ENV
             source $BASH_ENV
+            echo $JAVA_HOME
       - run:
           command: ./gradlew build
