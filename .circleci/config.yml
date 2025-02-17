@@ -16,9 +16,3 @@ jobs:
             source $BASH_ENV
       - run:
           command: ./gradlew build
-
-workflows:
-  version: 2
-  build-deploy:
-    jobs:
-      - build
